@@ -4,34 +4,34 @@ import FlatListItem from './FlatListItem';
 import LibraryReducer from './reducer/LibraryReducer';
 
 class FlatListView extends PureComponent {
-    state = { records: []}
+    state = { records: [{name: "Amol Chaudhari", id: 111}, {name: "Amol Patil", id: 112}, 
+    {name: "Amol Gujar", id: 113}, {name: "Amol Jain", id: 114}]}
+    _keyExtractor = (item, index) => item.id;
 
     static navigationOptions = {
         title: 'List Screen',
     }; 
 
     componentWillMount() {
-        this.setState({records: [{name: "Amol Chaudhari", id: 111}, {name: "Amol Patil", id: 112}, 
-        {name: "Amol Gujar", id: 113}, {name: "Amol Jain", id: 114}]})
+       // this.setState({records: [{name: "Amol Chaudhari", id: 111}, {name: "Amol Patil", id: 112}, 
+        //{name: "Amol Gujar", id: 113}, {name: "Amol Jain", id: 114}]})
 
     }
 
-    renderItem(item) {
-        return (
-
-            /*<View style={{backgroundColor: 'yellow'}}>
-                <Text> {item.name} </Text>
-            </View>*/
-        
+    _renderItem = ({item}) => {  
+        //alert("person name: " + item.name);
+        //return (
             <FlatListItem
                 id={item.id}
                 title={item.name}
+                selected={true}
                 onPressItem={this.onPressItemCell}
             />
-        );
-    }
+        //);          
+    };
 
     onPressItemCell = (title) => {
+        debugger
         //alert("Selected value:" + String(id));
         const {navigate} = this.props.navigation;
         navigate('DetailView', {name: title})
@@ -40,14 +40,22 @@ class FlatListView extends PureComponent {
     render() {
         console.log(this.state.records);
         return (
-            <View style={styles.viewStyle}>
-                <FlatList 
-                    contentContainerStyle = {{backgroundColor:'lightGrey', flex: 1}}
-                    data={this.state.records}
-                    keyExtractor={(item) => String(item.id)}
-                    renderItem={({item}) => this.renderItem(item)}
-                />
-            </View>
+            //<View style={styles.viewStyle}>
+            <FlatList
+                // contentContainerStyle = {{backgroundColor:'lightGrey', flex: 1}}
+                data={this.state.records}
+                extraData={this.state}
+                keyExtractor={this._keyExtractor}
+                renderItem={({ item }) => (
+                    <FlatListItem
+                        id={item.id}
+                        title={item.name}
+                        selected={true}
+                        onPressItem={this.onPressItemCell}
+                    />
+                )}
+            />
+            //</View>
         )
     }
 

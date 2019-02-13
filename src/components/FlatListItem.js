@@ -13,7 +13,6 @@ class FlatListItem extends PureComponent {
         //alert("in item view");
         return (
             <TouchableOpacity onPress={this.onPressFlatListItem.bind(this)}>
-            
                 <View style={style.itemStyle}>
                     <Text>
                         {this.props.title}
@@ -27,8 +26,7 @@ class FlatListItem extends PureComponent {
 
 const style = {
     itemStyle: {
-        padding: 10,
-        top: 50,
+        padding: 16,
         backgroundColor: 'white',
     }
 
